@@ -8,13 +8,13 @@ Given user has already logged in to application
 #We are using the concept of datatables in background .
 #We are not using concept of examples using data driven.
 
-
+@accounts
 Scenario: Accounts page title
 Given user is on Accounts page
 When user gets the title of the page
 Then page title should be "My account - My Store"
 
-@skip
+@accounts
 Scenario: Accounts section count
 Given user is on Accounts page
 Then user gets accounts section
