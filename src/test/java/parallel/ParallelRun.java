@@ -11,10 +11,10 @@ import io.cucumber.testng.CucumberOptions;
 				"rerun:target/failedrerun.txt"
 			
 				}, 
+//		tags ="not Skip",    uncomment this line to skip the scenario using runner file . If commented it will work using @before(order=0) hook.
 		monochrome = true,
 		glue = { "parallel" },
     	features = { "src/test/resources/parallel/LoginPage.feature" }
-//		features = { "/Users/harshchoubey/eclipse-workspace/CucumberPOMSeriesTestNgExcelFailedRerun/src/test/resources/parallel/LoginPage.feature" }
 )
 
 public class ParallelRun extends AbstractTestNGCucumberTests {
