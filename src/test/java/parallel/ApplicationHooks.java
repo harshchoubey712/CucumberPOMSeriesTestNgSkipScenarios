@@ -2,6 +2,7 @@ package parallel;
 
 import java.util.Properties;
 
+import org.junit.Assume;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -22,31 +23,27 @@ public class ApplicationHooks {
 	private ConfigReader configReader;
 	Properties prop;
 
-	@Before(order = 0)
 	
-	/*
-	 Hooks will run before each scenario. order=0 will run 1st in @before. 
-	 order=1 will run 1st in @after.
-	 
-	 so as per hooks before running each scenario order=0 hook will initilalize prop file and order=1 hook will
-	 launch the new driver.
-	 
-	 */
-	public void getProperty() {
-		configReader = new ConfigReader();
-		prop = configReader.init_prop();
-	}
 
-	@Before(order = 1)
-	public void launchBrowser() {
-		String browserName = prop.getProperty("browser");
-		driverFactory = new DriverFactory();
-		driver = driverFactory.init_driver(browserName);
-/*
- Above will launch the driver with thread local using driverfactory object.
- 
- */
+		@Before(value = "@skip", order=0)
+		public void skip_scenario(Scenario scenario)
+		{
+			System.out.println("SKIPPED SCENARIO is " + scenario.getName());
+			Assume.assumeTrue(false);
+			
+		}
 		
+		@Before(order=1)
+		public void getProperty() {
+			configReader = new ConfigReader();
+			prop = configReader.init_prop();
+		}
+
+		@Before(order = 2)
+		public void launchBrowser() {
+			String browserName = prop.getProperty("browser");
+			driverFactory = new DriverFactory();
+			driver = driverFactory.init_driver(browserName);
 	}
 
 	@After(order = 0)
